@@ -58,5 +58,6 @@ func (app *WebsocketApp) OnConnectHandler(connection *MessageBrokerClient.Websoc
 }
 
 func (app *WebsocketApp) OnDisconnectHandler(connection *MessageBrokerClient.WebsocketClient) error {
+	println("websocket client disconnected")
 	return nil
 }
