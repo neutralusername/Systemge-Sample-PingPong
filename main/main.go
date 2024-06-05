@@ -13,12 +13,13 @@ const WEBSOCKET_PORT = ":8443"
 const ERROR_LOG_FILE_PATH = "error.log"
 
 func main() {
+	clientApp := Module.NewClient("clientApp", TOPICRESOLUTIONSERVER_ADDRESS, ERROR_LOG_FILE_PATH, app.New)
 	Module.StartSystemgeConsole(Module.NewMultiModule(
 		Module.NewResolverServerFromConfig("resolver.systemge", ERROR_LOG_FILE_PATH),
 		Module.NewBrokerServerFromConfig("brokerApp.systemge", ERROR_LOG_FILE_PATH),
 		Module.NewBrokerServerFromConfig("brokerWebsocket.systemge", ERROR_LOG_FILE_PATH),
-		Module.NewClient("clientApp", TOPICRESOLUTIONSERVER_ADDRESS, ERROR_LOG_FILE_PATH, app.New),
+		clientApp,
 		Module.NewWebsocketClient("clientWebsocket", TOPICRESOLUTIONSERVER_ADDRESS, ERROR_LOG_FILE_PATH, "/ws", WEBSOCKET_PORT, "", "", appWebsocket.New),
 		Module.NewHTTPServerFromConfig("httpServe.systemge", ERROR_LOG_FILE_PATH),
-	), nil)
+	), clientApp.GetApplication().GetCustomCommandHandlers())
 }

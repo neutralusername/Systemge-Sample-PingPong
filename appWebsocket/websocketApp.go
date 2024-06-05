@@ -24,6 +24,7 @@ func (app *WebsocketApp) GetAsyncMessageHandlers() map[string]MessageBrokerClien
 	return map[string]MessageBrokerClient.AsyncMessageHandler{
 		topics.PONG: func(message *Message.Message) error {
 			println("PONG")
+			app.messageBrokerClient.WebsocketBroadcast([]byte(Message.NewAsync("pingPongTestSuccessfull", app.messageBrokerClient.GetName(), "").Serialize()))
 			return nil
 		},
 	}
