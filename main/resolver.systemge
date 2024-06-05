@@ -1,0 +1,5 @@
+# resolver
+:60000
+ping :60004
+pong :60003
+pingPongSync :60003
