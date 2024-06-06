@@ -49,8 +49,8 @@ func (app *WebsocketApp) OnConnectHandler(connection *WebsocketClient.Client) er
 	if err != nil {
 		return Error.New("error sending pingPongSync message", err)
 	}
-	if reponse.Payload != "pong" {
-		return Error.New("expected pong, got "+reponse.Payload, nil)
+	if reponse.GetPayload() != "pong" {
+		return Error.New("expected pong, got "+reponse.GetPayload(), nil)
 	}
 	err = app.messageBrokerClient.AsyncMessage(Message.NewAsync(topics.PING, connection.GetId(), "ping"))
 	if err != nil {
