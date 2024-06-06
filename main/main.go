@@ -14,7 +14,7 @@ const ERROR_LOG_FILE_PATH = "error.log"
 
 func main() {
 	clientApp := Module.NewClient("clientApp", TOPICRESOLUTIONSERVER_ADDRESS, ERROR_LOG_FILE_PATH, app.New)
-	Module.StartSystemgeConsole(Module.NewMultiModule(
+	Module.StartCommandLineInterface(Module.NewMultiModule(
 		Module.NewResolverServerFromConfig("resolver.systemge", ERROR_LOG_FILE_PATH),
 		Module.NewBrokerServerFromConfig("brokerApp.systemge", ERROR_LOG_FILE_PATH),
 		Module.NewBrokerServerFromConfig("brokerWebsocket.systemge", ERROR_LOG_FILE_PATH),
