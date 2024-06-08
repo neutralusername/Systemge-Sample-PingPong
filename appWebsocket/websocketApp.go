@@ -44,7 +44,7 @@ func (app *WebsocketApp) GetWebsocketMessageHandlers() map[string]Application.We
 	return map[string]Application.WebsocketMessageHandler{}
 }
 
-func (app *WebsocketApp) OnConnectHandler(connection *WebsocketClient.Client) error {
+func (app *WebsocketApp) OnConnectHandler(connection *WebsocketClient.Client) {
 	reponse, err := app.messageBrokerClient.SyncMessage(Message.NewSync(topics.PINGPONG_SYNC, connection.GetId(), "ping"))
 	if err != nil {
 		app.logger.Log(Error.New("error sending pingPongSync message", err).Error())
@@ -56,10 +56,8 @@ func (app *WebsocketApp) OnConnectHandler(connection *WebsocketClient.Client) er
 	if err != nil {
 		app.logger.Log(Error.New("error sending ping message", err).Error())
 	}
-	return nil
 }
 
-func (app *WebsocketApp) OnDisconnectHandler(connection *WebsocketClient.Client) error {
+func (app *WebsocketApp) OnDisconnectHandler(connection *WebsocketClient.Client) {
 	println("websocket client disconnected")
-	return nil
 }
