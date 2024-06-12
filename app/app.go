@@ -23,6 +23,14 @@ func New(logger *Utilities.Logger, messageBrokerClient *MessageBrokerClient.Clie
 	return app
 }
 
+func (app *App) OnStart() error {
+	return nil
+}
+
+func (app *App) OnStop() error {
+	return nil
+}
+
 func (app *App) GetAsyncMessageHandlers() map[string]Application.AsyncMessageHandler {
 	return map[string]Application.AsyncMessageHandler{
 		topics.PING: func(message *Message.Message) error {

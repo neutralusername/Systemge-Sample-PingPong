@@ -22,6 +22,14 @@ func New(logger *Utilities.Logger, messageBrokerClient *MessageBrokerClient.Clie
 	}
 }
 
+func (app *WebsocketApp) OnStart() error {
+	return nil
+}
+
+func (app *WebsocketApp) OnStop() error {
+	return nil
+}
+
 func (app *WebsocketApp) GetAsyncMessageHandlers() map[string]Application.AsyncMessageHandler {
 	return map[string]Application.AsyncMessageHandler{
 		topics.PONG: func(message *Message.Message) error {
