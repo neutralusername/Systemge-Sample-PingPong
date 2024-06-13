@@ -35,7 +35,7 @@ func (app *App) GetAsyncMessageHandlers() map[string]Application.AsyncMessageHan
 	return map[string]Application.AsyncMessageHandler{
 		topics.PING: func(message *Message.Message) error {
 			app.pingsReceived++
-			err := app.messageBrokerClient.AsyncMessage(Message.NewAsync("pong", app.messageBrokerClient.GetName(), "pong"))
+			err := app.messageBrokerClient.AsyncMessage("pong", app.messageBrokerClient.GetName(), "pong")
 			if err != nil {
 				return Error.New("error sending pong message", err)
 			}

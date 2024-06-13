@@ -53,14 +53,14 @@ func (app *WebsocketApp) GetWebsocketMessageHandlers() map[string]Application.We
 }
 
 func (app *WebsocketApp) OnConnectHandler(connection *WebsocketClient.Client) {
-	reponse, err := app.messageBrokerClient.SyncMessage(Message.NewSync(topics.PINGPONG_SYNC, connection.GetId(), "ping"))
+	reponse, err := app.messageBrokerClient.SyncMessage(topics.PINGPONG_SYNC, connection.GetId(), "ping")
 	if err != nil {
 		app.logger.Log(Error.New("error sending pingPongSync message", err).Error())
 	}
 	if reponse.GetPayload() != "pong" {
 		app.logger.Log(Error.New("expected pong, got "+reponse.GetPayload(), nil).Error())
 	}
-	err = app.messageBrokerClient.AsyncMessage(Message.NewAsync(topics.PING, connection.GetId(), "ping"))
+	err = app.messageBrokerClient.AsyncMessage(topics.PING, connection.GetId(), "ping")
 	if err != nil {
 		app.logger.Log(Error.New("error sending ping message", err).Error())
 	}
