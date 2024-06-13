@@ -2,8 +2,8 @@ package main
 
 import (
 	"Systemge/Module"
-	"SystemgeFramework/app"
-	"SystemgeFramework/appWebsocket"
+	"SystemgeSamplePingPong/app"
+	"SystemgeSamplePingPong/appWebsocket"
 )
 
 const TOPICRESOLUTIONSERVER_ADDRESS = ":60000"

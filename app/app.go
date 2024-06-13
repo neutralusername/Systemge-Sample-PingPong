@@ -6,7 +6,7 @@ import (
 	"Systemge/Message"
 	"Systemge/MessageBrokerClient"
 	"Systemge/Utilities"
-	"SystemgeFramework/topics"
+	"SystemgeSamplePingPong/topics"
 )
 
 type App struct {

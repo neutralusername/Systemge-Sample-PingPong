@@ -7,7 +7,7 @@ import (
 	"Systemge/MessageBrokerClient"
 	"Systemge/Utilities"
 	"Systemge/WebsocketClient"
-	"SystemgeFramework/topics"
+	"SystemgeSamplePingPong/topics"
 )
 
 type WebsocketApp struct {

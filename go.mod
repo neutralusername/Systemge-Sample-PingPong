@@ -1,4 +1,4 @@
-module SystemgeFramework
+module SystemgeSamplePingPong
 
 go 1.22.3
 
