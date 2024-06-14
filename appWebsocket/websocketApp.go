@@ -23,10 +23,19 @@ func New(logger *Utilities.Logger, messageBrokerClient *MessageBrokerClient.Clie
 }
 
 func (app *WebsocketApp) OnStart() error {
+	err := app.messageBrokerClient.AsyncMessage(topics.PING, app.messageBrokerClient.GetName(), "ping")
+	if err != nil {
+		app.logger.Log(Error.New("error sending ping message", err).Error())
+	}
 	return nil
 }
 
 func (app *WebsocketApp) OnStop() error {
+	err := app.messageBrokerClient.AsyncMessage(topics.PING, app.messageBrokerClient.GetName(), "ping")
+	if err != nil {
+		app.logger.Log(Error.New("error sending ping message", err).Error())
+	}
+	println("successfully sent ping message to broker but clientApp already stopped due to multi-module stop order.")
 	return nil
 }
 
