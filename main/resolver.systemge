@@ -1,5 +1,5 @@
 # resolver
 :60000
-ping :60004
-pong :60003
-pingPong :60003
+ping 127.0.0.1:60004
+pong 127.0.0.1:60003
+pingPong 127.0.0.1:60003
