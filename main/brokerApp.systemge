@@ -1,3 +1,5 @@
 # broker
 :60004
+key ./MyKey.key
+cert ./MyCertificate.crt
 ping async

@@ -1,4 +1,6 @@
 # broker
 :60003
+key ./MyKey.key
+cert ./MyCertificate.crt
 pingPong sync
 pong async

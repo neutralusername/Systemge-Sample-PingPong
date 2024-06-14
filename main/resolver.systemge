@@ -1,5 +1,9 @@
 # resolver
 :60000
-ping 127.0.0.1:60004
-pong 127.0.0.1:60003
-pingPong 127.0.0.1:60003
+
+brokerApp 127.0.0.1:60004 ./MyCertificate.crt
+brokerWebsocket 127.0.0.1:60003 ./MyCertificate.crt
+
+ping brokerApp
+pong brokerWebsocket
+pingPong brokerWebsocket
