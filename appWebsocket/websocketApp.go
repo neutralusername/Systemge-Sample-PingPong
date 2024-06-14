@@ -43,7 +43,7 @@ func (app *WebsocketApp) GetAsyncMessageHandlers() map[string]Application.AsyncM
 	return map[string]Application.AsyncMessageHandler{
 		topics.PONG: func(message *Message.Message) error {
 			println("PONG")
-			app.messageBrokerClient.GetWebsocketServer().Broadcast([]byte(Message.NewAsync("pingPongTestSuccessfull", app.messageBrokerClient.GetName(), "").Serialize()))
+			app.messageBrokerClient.GetWebsocketServer().Broadcast([]byte(Message.NewAsync("pingPongTestSuccessful", app.messageBrokerClient.GetName(), "").Serialize()))
 			return nil
 		},
 	}
