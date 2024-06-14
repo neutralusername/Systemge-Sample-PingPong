@@ -1,4 +1,4 @@
 # broker
 :60003
-pingPongSync
-pong
+pingPong sync
+pong async

@@ -46,7 +46,7 @@ func (app *App) GetAsyncMessageHandlers() map[string]Application.AsyncMessageHan
 
 func (app *App) GetSyncMessageHandlers() map[string]Application.SyncMessageHandler {
 	return map[string]Application.SyncMessageHandler{
-		topics.PINGPONG_SYNC: func(message *Message.Message) (string, error) {
+		topics.PINGPONG: func(message *Message.Message) (string, error) {
 			app.pingsReceived++
 			return "pong", nil
 		},

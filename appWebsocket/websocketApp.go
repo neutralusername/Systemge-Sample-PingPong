@@ -62,7 +62,7 @@ func (app *WebsocketApp) GetWebsocketMessageHandlers() map[string]Application.We
 }
 
 func (app *WebsocketApp) OnConnectHandler(connection *WebsocketClient.Client) {
-	reponse, err := app.messageBrokerClient.SyncMessage(topics.PINGPONG_SYNC, connection.GetId(), "ping")
+	reponse, err := app.messageBrokerClient.SyncMessage(topics.PINGPONG, connection.GetId(), "ping")
 	if err != nil {
 		app.logger.Log(Error.New("error sending pingPongSync message", err).Error())
 	}
