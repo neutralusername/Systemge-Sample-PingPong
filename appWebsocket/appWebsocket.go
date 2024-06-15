@@ -9,17 +9,17 @@ import (
 	"SystemgeSamplePingPong/topics"
 )
 
-type WebsocketApp struct {
+type AppWebsocket struct {
 	client *Client.Client
 }
 
 func New(client *Client.Client, args []string) Application.WebsocketApplication {
-	return &WebsocketApp{
+	return &AppWebsocket{
 		client: client,
 	}
 }
 
-func (app *WebsocketApp) OnStart() error {
+func (app *AppWebsocket) OnStart() error {
 	err := app.client.AsyncMessage(topics.PING, app.client.GetName(), "ping")
 	if err != nil {
 		app.client.GetLogger().Log(Error.New("error sending ping message", err).Error())
@@ -27,7 +27,7 @@ func (app *WebsocketApp) OnStart() error {
 	return nil
 }
 
-func (app *WebsocketApp) OnStop() error {
+func (app *AppWebsocket) OnStop() error {
 	err := app.client.AsyncMessage(topics.PING, app.client.GetName(), "ping")
 	if err != nil {
 		app.client.GetLogger().Log(Error.New("error sending ping message", err).Error())
@@ -36,7 +36,7 @@ func (app *WebsocketApp) OnStop() error {
 	return nil
 }
 
-func (app *WebsocketApp) GetAsyncMessageHandlers() map[string]Application.AsyncMessageHandler {
+func (app *AppWebsocket) GetAsyncMessageHandlers() map[string]Application.AsyncMessageHandler {
 	return map[string]Application.AsyncMessageHandler{
 		topics.PONG: func(message *Message.Message) error {
 			println("PONG")
@@ -46,19 +46,19 @@ func (app *WebsocketApp) GetAsyncMessageHandlers() map[string]Application.AsyncM
 	}
 }
 
-func (app *WebsocketApp) GetSyncMessageHandlers() map[string]Application.SyncMessageHandler {
+func (app *AppWebsocket) GetSyncMessageHandlers() map[string]Application.SyncMessageHandler {
 	return map[string]Application.SyncMessageHandler{}
 }
 
-func (app *WebsocketApp) GetCustomCommandHandlers() map[string]Application.CustomCommandHandler {
+func (app *AppWebsocket) GetCustomCommandHandlers() map[string]Application.CustomCommandHandler {
 	return map[string]Application.CustomCommandHandler{}
 }
 
-func (app *WebsocketApp) GetWebsocketMessageHandlers() map[string]Application.WebsocketMessageHandler {
+func (app *AppWebsocket) GetWebsocketMessageHandlers() map[string]Application.WebsocketMessageHandler {
 	return map[string]Application.WebsocketMessageHandler{}
 }
 
-func (app *WebsocketApp) OnConnectHandler(connection *WebsocketClient.Client) {
+func (app *AppWebsocket) OnConnectHandler(connection *WebsocketClient.Client) {
 	reponse, err := app.client.SyncMessage(topics.PINGPONG, connection.GetId(), "ping")
 	if err != nil {
 		app.client.GetLogger().Log(Error.New("error sending pingPongSync message", err).Error())
@@ -72,6 +72,6 @@ func (app *WebsocketApp) OnConnectHandler(connection *WebsocketClient.Client) {
 	}
 }
 
-func (app *WebsocketApp) OnDisconnectHandler(connection *WebsocketClient.Client) {
+func (app *AppWebsocket) OnDisconnectHandler(connection *WebsocketClient.Client) {
 	println("websocket client disconnected")
 }
