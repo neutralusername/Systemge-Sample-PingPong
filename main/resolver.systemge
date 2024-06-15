@@ -2,5 +2,5 @@
 resolver :60000
 config :60001 ./MyCertificate.crt ./MyKey.key
 
-brokerApp 127.0.0.1:60005 ./MyCertificate.crt ping
-brokerWebsocket 127.0.0.1:60003 ./MyCertificate.crt pong pingPong
+brokerApp 127.0.0.1:60005 127.0.0.1 ./MyCertificate.crt ping
+brokerWebsocket 127.0.0.1:60003 127.0.0.1 ./MyCertificate.crt pong pingPong
