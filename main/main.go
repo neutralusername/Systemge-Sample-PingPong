@@ -12,9 +12,9 @@ const WEBSOCKET_PORT = ":8443"
 const ERROR_LOG_FILE_PATH = "error.log"
 
 func main() {
-	Module.NewResolverServerFromConfig("resolver.systemge", ERROR_LOG_FILE_PATH).Start()
-	Module.NewBrokerServerFromConfig("brokerApp.systemge", ERROR_LOG_FILE_PATH).Start()
-	Module.NewBrokerServerFromConfig("brokerWebsocket.systemge", ERROR_LOG_FILE_PATH).Start()
+	Module.NewResolverFromConfig("resolver.systemge", ERROR_LOG_FILE_PATH).Start()
+	Module.NewBrokerFromConfig("brokerApp.systemge", ERROR_LOG_FILE_PATH).Start()
+	Module.NewBrokerFromConfig("brokerWebsocket.systemge", ERROR_LOG_FILE_PATH).Start()
 
 	clientApp := Module.NewClient("clientApp", TOPICRESOLUTIONSERVER_ADDRESS, ERROR_LOG_FILE_PATH, app.New, nil)
 	Module.StartCommandLineInterface(Module.NewMultiModule(
