@@ -16,10 +16,10 @@ func main() {
 	Module.NewBrokerServerFromConfig("brokerApp.systemge", ERROR_LOG_FILE_PATH).Start()
 	Module.NewBrokerServerFromConfig("brokerWebsocket.systemge", ERROR_LOG_FILE_PATH).Start()
 
-	clientApp := Module.NewClient("clientApp", TOPICRESOLUTIONSERVER_ADDRESS, ERROR_LOG_FILE_PATH, app.New)
+	clientApp := Module.NewClient("clientApp", TOPICRESOLUTIONSERVER_ADDRESS, ERROR_LOG_FILE_PATH, app.New, nil)
 	Module.StartCommandLineInterface(Module.NewMultiModule(
 		clientApp,
-		Module.NewWebsocketClient("clientWebsocket", TOPICRESOLUTIONSERVER_ADDRESS, ERROR_LOG_FILE_PATH, "/ws", WEBSOCKET_PORT, "", "", appWebsocket.New),
+		Module.NewWebsocketClient("clientWebsocket", TOPICRESOLUTIONSERVER_ADDRESS, ERROR_LOG_FILE_PATH, "/ws", WEBSOCKET_PORT, "", "", appWebsocket.New, nil),
 		Module.NewHTTPServerFromConfig("httpServe.systemge", ERROR_LOG_FILE_PATH),
 	), clientApp.GetApplication().GetCustomCommandHandlers())
 }

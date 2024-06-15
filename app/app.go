@@ -2,23 +2,20 @@ package app
 
 import (
 	"Systemge/Application"
+	"Systemge/Client"
 	"Systemge/Error"
 	"Systemge/Message"
-	"Systemge/MessageBrokerClient"
-	"Systemge/Utilities"
 	"SystemgeSamplePingPong/topics"
 )
 
 type App struct {
-	logger              *Utilities.Logger
-	messageBrokerClient *MessageBrokerClient.Client
-	pingsReceived       int
+	client        *Client.Client
+	pingsReceived int
 }
 
-func New(logger *Utilities.Logger, messageBrokerClient *MessageBrokerClient.Client) Application.Application {
+func New(client *Client.Client, args []string) Application.Application {
 	app := &App{
-		logger:              logger,
-		messageBrokerClient: messageBrokerClient,
+		client: client,
 	}
 	return app
 }
@@ -35,7 +32,7 @@ func (app *App) GetAsyncMessageHandlers() map[string]Application.AsyncMessageHan
 	return map[string]Application.AsyncMessageHandler{
 		topics.PING: func(message *Message.Message) error {
 			app.pingsReceived++
-			err := app.messageBrokerClient.AsyncMessage("pong", app.messageBrokerClient.GetName(), "pong")
+			err := app.client.AsyncMessage("pong", app.client.GetName(), "pong")
 			if err != nil {
 				return Error.New("error sending pong message", err)
 			}
