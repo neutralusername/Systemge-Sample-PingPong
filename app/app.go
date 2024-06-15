@@ -13,11 +13,11 @@ type App struct {
 	pingsReceived int
 }
 
-func New(client *Client.Client, args []string) Application.Application {
+func New(client *Client.Client, args []string) (Application.Application, error) {
 	app := &App{
 		client: client,
 	}
-	return app
+	return app, nil
 }
 
 func (app *App) OnStart() error {
