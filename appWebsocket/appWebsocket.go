@@ -3,8 +3,8 @@ package appWebsocket
 import (
 	"Systemge/Application"
 	"Systemge/Client"
-	"Systemge/Error"
 	"Systemge/Message"
+	"Systemge/Utilities"
 	"Systemge/WebsocketClient"
 	"SystemgeSamplePingPong/topics"
 )
@@ -22,7 +22,7 @@ func New(client *Client.Client, args []string) Application.WebsocketApplication 
 func (app *AppWebsocket) OnStart() error {
 	err := app.client.AsyncMessage(topics.PING, app.client.GetName(), "ping")
 	if err != nil {
-		app.client.GetLogger().Log(Error.New("error sending ping message", err).Error())
+		app.client.GetLogger().Log(Utilities.NewError("error sending ping message", err).Error())
 	}
 	return nil
 }
@@ -30,7 +30,7 @@ func (app *AppWebsocket) OnStart() error {
 func (app *AppWebsocket) OnStop() error {
 	err := app.client.AsyncMessage(topics.PING, app.client.GetName(), "ping")
 	if err != nil {
-		app.client.GetLogger().Log(Error.New("error sending ping message", err).Error())
+		app.client.GetLogger().Log(Utilities.NewError("error sending ping message", err).Error())
 	}
 	println("successfully sent ping message to broker but clientApp already stopped due to multi-module stop order.")
 	return nil
@@ -61,14 +61,14 @@ func (app *AppWebsocket) GetWebsocketMessageHandlers() map[string]Application.We
 func (app *AppWebsocket) OnConnectHandler(connection *WebsocketClient.Client) {
 	reponse, err := app.client.SyncMessage(topics.PINGPONG, connection.GetId(), "ping")
 	if err != nil {
-		app.client.GetLogger().Log(Error.New("error sending pingPongSync message", err).Error())
+		app.client.GetLogger().Log(Utilities.NewError("error sending pingPongSync message", err).Error())
 	}
 	if reponse.GetPayload() != "pong" {
-		app.client.GetLogger().Log(Error.New("expected pong, got "+reponse.GetPayload(), nil).Error())
+		app.client.GetLogger().Log(Utilities.NewError("expected pong, got "+reponse.GetPayload(), nil).Error())
 	}
 	err = app.client.AsyncMessage(topics.PING, connection.GetId(), "ping")
 	if err != nil {
-		app.client.GetLogger().Log(Error.New("error sending ping message", err).Error())
+		app.client.GetLogger().Log(Utilities.NewError("error sending ping message", err).Error())
 	}
 }
 
