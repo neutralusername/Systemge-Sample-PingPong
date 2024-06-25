@@ -10,7 +10,7 @@ func (app *AppWebsocketHTTP) GetAsyncMessageHandlers() map[string]Client.AsyncMe
 	return map[string]Client.AsyncMessageHandler{
 		topics.PONG: func(client *Client.Client, message *Message.Message) error {
 			println("PONG")
-			client.Broadcast(Message.NewAsync("pong", client.GetName(), ""))
+			client.WebsocketBroadcast(Message.NewAsync("pong", client.GetName(), ""))
 			return nil
 		},
 	}
