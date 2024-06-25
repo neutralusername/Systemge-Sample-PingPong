@@ -2,8 +2,8 @@ package app
 
 import (
 	"Systemge/Client"
+	"Systemge/Error"
 	"Systemge/Message"
-	"Systemge/Utilities"
 	"SystemgeSamplePingPong/topics"
 )
 
@@ -13,7 +13,7 @@ func (app *App) GetAsyncMessageHandlers() map[string]Client.AsyncMessageHandler 
 			app.pingsReceived++
 			err := client.AsyncMessage("pong", client.GetName(), "pong")
 			if err != nil {
-				return Utilities.NewError("error sending pong message", err)
+				return Error.New("error sending pong message", err)
 			}
 			return nil
 		},
