@@ -1,16 +1,16 @@
 package appWebsocketHTTP
 
 import (
-	"Systemge/Application"
+	"Systemge/Client"
 	"Systemge/Message"
 	"SystemgeSamplePingPong/topics"
 )
 
-func (app *AppWebsocketHTTP) GetAsyncMessageHandlers() map[string]Application.AsyncMessageHandler {
-	return map[string]Application.AsyncMessageHandler{
-		topics.PONG: func(message *Message.Message) error {
+func (app *AppWebsocketHTTP) GetAsyncMessageHandlers() map[string]Client.AsyncMessageHandler {
+	return map[string]Client.AsyncMessageHandler{
+		topics.PONG: func(client *Client.Client, message *Message.Message) error {
 			println("PONG")
-			app.client.GetWebsocketServer().Broadcast(Message.NewAsync("pong", app.client.GetName(), ""))
+			client.Broadcast(Message.NewAsync("pong", client.GetName(), ""))
 			return nil
 		},
 	}

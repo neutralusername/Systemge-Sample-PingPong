@@ -1,14 +1,14 @@
 package app
 
 import (
-	"Systemge/Application"
+	"Systemge/Client"
 	"Systemge/Message"
 	"SystemgeSamplePingPong/topics"
 )
 
-func (app *App) GetSyncMessageHandlers() map[string]Application.SyncMessageHandler {
-	return map[string]Application.SyncMessageHandler{
-		topics.PINGPONG: func(message *Message.Message) (string, error) {
+func (app *App) GetSyncMessageHandlers() map[string]Client.SyncMessageHandler {
+	return map[string]Client.SyncMessageHandler{
+		topics.PINGPONG: func(client *Client.Client, message *Message.Message) (string, error) {
 			app.pingsReceived++
 			return "pong", nil
 		},

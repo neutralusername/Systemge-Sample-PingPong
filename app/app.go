@@ -1,26 +1,22 @@
 package app
 
 import (
-	"Systemge/Application"
 	"Systemge/Client"
 )
 
 type App struct {
-	client        *Client.Client
 	pingsReceived int
 }
 
-func New(client *Client.Client, args []string) (Application.Application, error) {
-	app := &App{
-		client: client,
-	}
-	return app, nil
+func New() Client.Application {
+	app := &App{}
+	return app
 }
 
-func (app *App) OnStart() error {
+func (app *App) OnStart(client *Client.Client) error {
 	return nil
 }
 
-func (app *App) OnStop() error {
+func (app *App) OnStop(client *Client.Client) error {
 	return nil
 }

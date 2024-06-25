@@ -1,7 +1,9 @@
 package main
 
 import (
+	"Systemge/Client"
 	"Systemge/Module"
+	"Systemge/Utilities"
 	"SystemgeSamplePingPong/app"
 	"SystemgeSamplePingPong/appWebsocketHTTP"
 )
@@ -19,25 +21,26 @@ func main() {
 	Module.NewBrokerFromConfig("brokerApp.systemge", ERROR_LOG_FILE_PATH).Start()
 	Module.NewBrokerFromConfig("brokerWebsocket.systemge", ERROR_LOG_FILE_PATH).Start()
 
-	clientApp := Module.NewClient(&Module.ClientConfig{
+	clientApp := Module.NewClient(&Client.Config{
 		Name:                   "clientApp",
 		ResolverAddress:        RESOLVER_ADDRESS,
 		ResolverNameIndication: RESOLVER_NAME_INDICATION,
-		ResolverTLSCertPath:    RESOLVER_TLS_CERT_PATH,
+		ResolverTLSCert:        Utilities.GetFileContent(RESOLVER_TLS_CERT_PATH),
 		LoggerPath:             ERROR_LOG_FILE_PATH,
-	}, app.New, nil)
-	clientWebsocketHTTP := Module.NewCompositeClientWebsocketHTTP(&Module.ClientConfig{
+	}, app.New(), nil, nil)
+	applicationWebsocketHTTP := appWebsocketHTTP.New()
+	clientWebsocketHTTP := Module.NewClient(&Client.Config{
 		Name:                   "clientWebsocketHTTP",
 		ResolverAddress:        RESOLVER_ADDRESS,
 		ResolverNameIndication: RESOLVER_NAME_INDICATION,
-		ResolverTLSCertPath:    RESOLVER_TLS_CERT_PATH,
+		ResolverTLSCert:        Utilities.GetFileContent(RESOLVER_TLS_CERT_PATH),
 		LoggerPath:             ERROR_LOG_FILE_PATH,
 		WebsocketPattern:       "/ws",
 		WebsocketPort:          WEBSOCKET_PORT,
 		HTTPPort:               HTTP_PORT,
-	}, appWebsocketHTTP.New, nil)
+	}, applicationWebsocketHTTP, applicationWebsocketHTTP, applicationWebsocketHTTP)
 	Module.StartCommandLineInterface(Module.NewMultiModule(
 		clientApp,
 		clientWebsocketHTTP,
-	), clientApp.GetApplication().GetCustomCommandHandlers())
+	))
 }

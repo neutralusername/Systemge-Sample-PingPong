@@ -1,30 +1,30 @@
 package appWebsocketHTTP
 
 import (
-	"Systemge/Application"
+	"Systemge/Client"
 	"Systemge/Utilities"
 	"Systemge/WebsocketClient"
 	"SystemgeSamplePingPong/topics"
 )
 
-func (app *AppWebsocketHTTP) GetWebsocketMessageHandlers() map[string]Application.WebsocketMessageHandler {
-	return map[string]Application.WebsocketMessageHandler{}
+func (app *AppWebsocketHTTP) GetWebsocketMessageHandlers() map[string]Client.WebsocketMessageHandler {
+	return map[string]Client.WebsocketMessageHandler{}
 }
 
-func (app *AppWebsocketHTTP) OnConnectHandler(connection *WebsocketClient.Client) {
-	reponse, err := app.client.SyncMessage(topics.PINGPONG, connection.GetId(), "ping")
+func (app *AppWebsocketHTTP) OnConnectHandler(client *Client.Client, websocketClient *WebsocketClient.Client) {
+	reponse, err := client.SyncMessage(topics.PINGPONG, websocketClient.GetId(), "ping")
 	if err != nil {
-		app.client.GetLogger().Log(Utilities.NewError("error sending pingPongSync message", err).Error())
+		client.GetLogger().Log(Utilities.NewError("error sending pingPongSync message", err).Error())
 	}
 	if reponse.GetPayload() != "pong" {
-		app.client.GetLogger().Log(Utilities.NewError("expected pong, got "+reponse.GetPayload(), nil).Error())
+		client.GetLogger().Log(Utilities.NewError("expected pong, got "+reponse.GetPayload(), nil).Error())
 	}
-	err = app.client.AsyncMessage(topics.PING, connection.GetId(), "ping")
+	err = client.AsyncMessage(topics.PING, websocketClient.GetId(), "ping")
 	if err != nil {
-		app.client.GetLogger().Log(Utilities.NewError("error sending ping message", err).Error())
+		client.GetLogger().Log(Utilities.NewError("error sending ping message", err).Error())
 	}
 }
 
-func (app *AppWebsocketHTTP) OnDisconnectHandler(connection *WebsocketClient.Client) {
+func (app *AppWebsocketHTTP) OnDisconnectHandler(client *Client.Client, websocketClient *WebsocketClient.Client) {
 	println("websocket client disconnected")
 }
