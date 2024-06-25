@@ -22,22 +22,24 @@ func main() {
 	Module.NewBrokerFromConfig("brokerWebsocket.systemge", ERROR_LOG_FILE_PATH).Start()
 
 	clientApp := Module.NewClient(&Client.Config{
-		Name:                   "clientApp",
-		ResolverAddress:        RESOLVER_ADDRESS,
-		ResolverNameIndication: RESOLVER_NAME_INDICATION,
-		ResolverTLSCert:        Utilities.GetFileContent(RESOLVER_TLS_CERT_PATH),
-		LoggerPath:             ERROR_LOG_FILE_PATH,
+		Name:                       "clientApp",
+		ResolverAddress:            RESOLVER_ADDRESS,
+		ResolverNameIndication:     RESOLVER_NAME_INDICATION,
+		ResolverTLSCert:            Utilities.GetFileContent(RESOLVER_TLS_CERT_PATH),
+		LoggerPath:                 ERROR_LOG_FILE_PATH,
+		HandleMessagesConcurrently: true,
 	}, app.New(), nil, nil)
 	applicationWebsocketHTTP := appWebsocketHTTP.New()
 	clientWebsocketHTTP := Module.NewClient(&Client.Config{
-		Name:                   "clientWebsocketHTTP",
-		ResolverAddress:        RESOLVER_ADDRESS,
-		ResolverNameIndication: RESOLVER_NAME_INDICATION,
-		ResolverTLSCert:        Utilities.GetFileContent(RESOLVER_TLS_CERT_PATH),
-		LoggerPath:             ERROR_LOG_FILE_PATH,
-		WebsocketPattern:       "/ws",
-		WebsocketPort:          WEBSOCKET_PORT,
-		HTTPPort:               HTTP_PORT,
+		Name:                       "clientWebsocketHTTP",
+		ResolverAddress:            RESOLVER_ADDRESS,
+		ResolverNameIndication:     RESOLVER_NAME_INDICATION,
+		ResolverTLSCert:            Utilities.GetFileContent(RESOLVER_TLS_CERT_PATH),
+		LoggerPath:                 ERROR_LOG_FILE_PATH,
+		WebsocketPattern:           "/ws",
+		WebsocketPort:              WEBSOCKET_PORT,
+		HTTPPort:                   HTTP_PORT,
+		HandleMessagesConcurrently: true,
 	}, applicationWebsocketHTTP, applicationWebsocketHTTP, applicationWebsocketHTTP)
 	Module.StartCommandLineInterface(Module.NewMultiModule(
 		clientApp,
