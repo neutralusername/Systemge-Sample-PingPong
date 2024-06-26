@@ -1,12 +1,12 @@
 package app
 
 import (
-	"Systemge/Client"
+	"Systemge/Node"
 )
 
-func (app *App) GetCustomCommandHandlers() map[string]Client.CustomCommandHandler {
-	return map[string]Client.CustomCommandHandler{
-		"pingsReceived": func(client *Client.Client, args []string) error {
+func (app *App) GetCustomCommandHandlers() map[string]Node.CustomCommandHandler {
+	return map[string]Node.CustomCommandHandler{
+		"pingsReceived": func(client *Node.Node, args []string) error {
 			println(app.pingsReceived)
 			return nil
 		},

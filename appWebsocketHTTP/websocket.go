@@ -1,16 +1,16 @@
 package appWebsocketHTTP
 
 import (
-	"Systemge/Client"
 	"Systemge/Error"
+	"Systemge/Node"
 	"SystemgeSamplePingPong/topics"
 )
 
-func (app *AppWebsocketHTTP) GetWebsocketMessageHandlers() map[string]Client.WebsocketMessageHandler {
-	return map[string]Client.WebsocketMessageHandler{}
+func (app *AppWebsocketHTTP) GetWebsocketMessageHandlers() map[string]Node.WebsocketMessageHandler {
+	return map[string]Node.WebsocketMessageHandler{}
 }
 
-func (app *AppWebsocketHTTP) OnConnectHandler(client *Client.Client, websocketClient *Client.WebsocketClient) {
+func (app *AppWebsocketHTTP) OnConnectHandler(client *Node.Node, websocketClient *Node.WebsocketClient) {
 	reponse, err := client.SyncMessage(topics.PINGPONG, websocketClient.GetId(), "ping")
 	if err != nil {
 		client.GetLogger().Log(Error.New("error sending pingPongSync message", err).Error())
@@ -24,6 +24,6 @@ func (app *AppWebsocketHTTP) OnConnectHandler(client *Client.Client, websocketCl
 	}
 }
 
-func (app *AppWebsocketHTTP) OnDisconnectHandler(client *Client.Client, websocketClient *Client.WebsocketClient) {
+func (app *AppWebsocketHTTP) OnDisconnectHandler(client *Node.Node, websocketClient *Node.WebsocketClient) {
 	println("websocket client disconnected")
 }

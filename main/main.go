@@ -1,8 +1,8 @@
 package main
 
 import (
-	"Systemge/Client"
 	"Systemge/Module"
+	"Systemge/Node"
 	"Systemge/Utilities"
 	"SystemgeSamplePingPong/app"
 	"SystemgeSamplePingPong/appWebsocketHTTP"
@@ -21,7 +21,7 @@ func main() {
 	Module.NewBrokerFromConfig("brokerApp.systemge", ERROR_LOG_FILE_PATH).Start()
 	Module.NewBrokerFromConfig("brokerWebsocket.systemge", ERROR_LOG_FILE_PATH).Start()
 
-	clientApp := Module.NewClient(&Client.Config{
+	clientApp := Module.NewClient(&Node.Config{
 		Name:                   "clientApp",
 		ResolverAddress:        RESOLVER_ADDRESS,
 		ResolverNameIndication: RESOLVER_NAME_INDICATION,
@@ -29,7 +29,7 @@ func main() {
 		LoggerPath:             ERROR_LOG_FILE_PATH,
 	}, app.New(), nil, nil)
 	applicationWebsocketHTTP := appWebsocketHTTP.New()
-	clientWebsocketHTTP := Module.NewClient(&Client.Config{
+	clientWebsocketHTTP := Module.NewClient(&Node.Config{
 		Name:                   "clientWebsocketHTTP",
 		ResolverAddress:        RESOLVER_ADDRESS,
 		ResolverNameIndication: RESOLVER_NAME_INDICATION,

@@ -1,19 +1,19 @@
 package appWebsocketHTTP
 
 import (
-	"Systemge/Client"
 	"Systemge/Error"
+	"Systemge/Node"
 	"SystemgeSamplePingPong/topics"
 )
 
 type AppWebsocketHTTP struct {
 }
 
-func New() Client.WebsocketHTTPApplication {
+func New() Node.WebsocketHTTPApplication {
 	return &AppWebsocketHTTP{}
 }
 
-func (app *AppWebsocketHTTP) OnStart(client *Client.Client) error {
+func (app *AppWebsocketHTTP) OnStart(client *Node.Node) error {
 	err := client.AsyncMessage(topics.PING, client.GetName(), "ping")
 	if err != nil {
 		client.GetLogger().Log(Error.New("error sending ping message", err).Error())
@@ -21,7 +21,7 @@ func (app *AppWebsocketHTTP) OnStart(client *Client.Client) error {
 	return nil
 }
 
-func (app *AppWebsocketHTTP) OnStop(client *Client.Client) error {
+func (app *AppWebsocketHTTP) OnStop(client *Node.Node) error {
 	err := client.AsyncMessage(topics.PING, client.GetName(), "ping")
 	if err != nil {
 		client.GetLogger().Log(Error.New("error sending ping message", err).Error())
