@@ -8,9 +8,9 @@ import (
 
 func (app *AppWebsocketHTTP) GetAsyncMessageHandlers() map[string]Node.AsyncMessageHandler {
 	return map[string]Node.AsyncMessageHandler{
-		topics.PONG: func(client *Node.Node, message *Message.Message) error {
+		topics.PONG: func(node *Node.Node, message *Message.Message) error {
 			println("PONG")
-			client.WebsocketBroadcast(Message.NewAsync("pong", client.GetName(), ""))
+			node.WebsocketBroadcast(Message.NewAsync("pong", node.GetName(), ""))
 			return nil
 		},
 	}

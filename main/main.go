@@ -21,16 +21,16 @@ func main() {
 	Module.NewBrokerFromConfig("brokerApp.systemge", ERROR_LOG_FILE_PATH).Start()
 	Module.NewBrokerFromConfig("brokerWebsocket.systemge", ERROR_LOG_FILE_PATH).Start()
 
-	clientApp := Module.NewClient(&Node.Config{
-		Name:                   "clientApp",
+	nodeApp := Module.NewNode(&Node.Config{
+		Name:                   "nodeApp",
 		ResolverAddress:        RESOLVER_ADDRESS,
 		ResolverNameIndication: RESOLVER_NAME_INDICATION,
 		ResolverTLSCert:        Utilities.GetFileContent(RESOLVER_TLS_CERT_PATH),
 		LoggerPath:             ERROR_LOG_FILE_PATH,
 	}, app.New(), nil, nil)
 	applicationWebsocketHTTP := appWebsocketHTTP.New()
-	clientWebsocketHTTP := Module.NewClient(&Node.Config{
-		Name:                   "clientWebsocketHTTP",
+	nodeWebsocketHTTP := Module.NewNode(&Node.Config{
+		Name:                   "nodeWebsocketHTTP",
 		ResolverAddress:        RESOLVER_ADDRESS,
 		ResolverNameIndication: RESOLVER_NAME_INDICATION,
 		ResolverTLSCert:        Utilities.GetFileContent(RESOLVER_TLS_CERT_PATH),
@@ -40,7 +40,7 @@ func main() {
 		HTTPPort:               HTTP_PORT,
 	}, applicationWebsocketHTTP, applicationWebsocketHTTP, applicationWebsocketHTTP)
 	Module.StartCommandLineInterface(Module.NewMultiModule(
-		clientApp,
-		clientWebsocketHTTP,
+		nodeApp,
+		nodeWebsocketHTTP,
 	))
 }

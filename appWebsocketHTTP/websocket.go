@@ -10,20 +10,20 @@ func (app *AppWebsocketHTTP) GetWebsocketMessageHandlers() map[string]Node.Webso
 	return map[string]Node.WebsocketMessageHandler{}
 }
 
-func (app *AppWebsocketHTTP) OnConnectHandler(client *Node.Node, websocketClient *Node.WebsocketClient) {
-	reponse, err := client.SyncMessage(topics.PINGPONG, websocketClient.GetId(), "ping")
+func (app *AppWebsocketHTTP) OnConnectHandler(node *Node.Node, websocketClient *Node.WebsocketClient) {
+	reponse, err := node.SyncMessage(topics.PINGPONG, websocketClient.GetId(), "ping")
 	if err != nil {
-		client.GetLogger().Log(Error.New("error sending pingPongSync message", err).Error())
+		node.GetLogger().Log(Error.New("error sending pingPongSync message", err).Error())
 	}
 	if reponse.GetPayload() != "pong" {
-		client.GetLogger().Log(Error.New("expected pong, got "+reponse.GetPayload(), nil).Error())
+		node.GetLogger().Log(Error.New("expected pong, got "+reponse.GetPayload(), nil).Error())
 	}
-	err = client.AsyncMessage(topics.PING, websocketClient.GetId(), "ping")
+	err = node.AsyncMessage(topics.PING, websocketClient.GetId(), "ping")
 	if err != nil {
-		client.GetLogger().Log(Error.New("error sending ping message", err).Error())
+		node.GetLogger().Log(Error.New("error sending ping message", err).Error())
 	}
 }
 
-func (app *AppWebsocketHTTP) OnDisconnectHandler(client *Node.Node, websocketClient *Node.WebsocketClient) {
+func (app *AppWebsocketHTTP) OnDisconnectHandler(node *Node.Node, websocketClient *Node.WebsocketClient) {
 	println("websocket client disconnected")
 }

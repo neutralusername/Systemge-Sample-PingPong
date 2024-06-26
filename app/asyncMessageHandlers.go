@@ -9,9 +9,9 @@ import (
 
 func (app *App) GetAsyncMessageHandlers() map[string]Node.AsyncMessageHandler {
 	return map[string]Node.AsyncMessageHandler{
-		topics.PING: func(client *Node.Node, message *Message.Message) error {
+		topics.PING: func(node *Node.Node, message *Message.Message) error {
 			app.pingsReceived++
-			err := client.AsyncMessage("pong", client.GetName(), "pong")
+			err := node.AsyncMessage("pong", node.GetName(), "pong")
 			if err != nil {
 				return Error.New("error sending pong message", err)
 			}
