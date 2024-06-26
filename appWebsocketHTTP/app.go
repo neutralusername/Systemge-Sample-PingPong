@@ -9,7 +9,7 @@ import (
 type AppWebsocketHTTP struct {
 }
 
-func New() Client.CompositeApplicationWebsocketHTTP {
+func New() Client.WebsocketHTTPApplication {
 	return &AppWebsocketHTTP{}
 }
 
