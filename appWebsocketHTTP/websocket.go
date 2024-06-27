@@ -27,3 +27,12 @@ func (app *AppWebsocketHTTP) OnConnectHandler(node *Node.Node, websocketClient *
 func (app *AppWebsocketHTTP) OnDisconnectHandler(node *Node.Node, websocketClient *Node.WebsocketClient) {
 	println("websocket client disconnected")
 }
+
+func (app *AppWebsocketHTTP) GetWebsocketComponentConfig() Node.WebsocketComponentConfig {
+	return Node.WebsocketComponentConfig{
+		Pattern:     "/ws",
+		Port:        ":8443",
+		TlsCertPath: "",
+		TlsKeyPath:  "",
+	}
+}
