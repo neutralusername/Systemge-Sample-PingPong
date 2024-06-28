@@ -20,12 +20,12 @@ func main() {
 	Module.NewBrokerFromConfig("brokerApp.systemge", ERROR_LOG_FILE_PATH).Start()
 	Module.NewBrokerFromConfig("brokerWebsocket.systemge", ERROR_LOG_FILE_PATH).Start()
 
-	nodeApp := Module.NewNode(&Config.Node{
+	nodeApp := Module.NewNode(Config.Node{
 		Name:       "nodeApp",
 		LoggerPath: ERROR_LOG_FILE_PATH,
 	}, app.New(), nil, nil)
 	applicationWebsocketHTTP := appWebsocketHTTP.New()
-	nodeWebsocketHTTP := Module.NewNode(&Config.Node{
+	nodeWebsocketHTTP := Module.NewNode(Config.Node{
 		Name:       "nodeWebsocketHTTP",
 		LoggerPath: ERROR_LOG_FILE_PATH,
 	}, applicationWebsocketHTTP, applicationWebsocketHTTP, applicationWebsocketHTTP)
