@@ -1,6 +1,7 @@
 package appWebsocketHTTP
 
 import (
+	"Systemge/Config"
 	"Systemge/Error"
 	"Systemge/Node"
 	"SystemgeSamplePingPong/topics"
@@ -28,8 +29,8 @@ func (app *AppWebsocketHTTP) OnDisconnectHandler(node *Node.Node, websocketClien
 	println("websocket client disconnected")
 }
 
-func (app *AppWebsocketHTTP) GetWebsocketComponentConfig() Node.WebsocketComponentConfig {
-	return Node.WebsocketComponentConfig{
+func (app *AppWebsocketHTTP) GetWebsocketComponentConfig() Config.Websocket {
+	return Config.Websocket{
 		Pattern:     "/ws",
 		Port:        ":8443",
 		TlsCertPath: "",
