@@ -5,18 +5,13 @@ import (
 	"Systemge/Config"
 	"Systemge/Module"
 	"Systemge/Node"
-	"Systemge/Resolution"
 	"Systemge/Resolver"
+	"Systemge/TcpEndpoint"
 	"Systemge/Utilities"
 	"SystemgeSamplePingPong/app"
 	"SystemgeSamplePingPong/appWebsocketHTTP"
+	"SystemgeSamplePingPong/config"
 )
-
-const RESOLVER_ADDRESS = "127.0.0.1:60000"
-const RESOLVER_NAME_INDICATION = "127.0.0.1"
-const RESOLVER_TLS_CERT_PATH = "MyCertificate.crt"
-const WEBSOCKET_PORT = ":8443"
-const HTTP_PORT = ":8080"
 
 const ERROR_LOG_FILE_PATH = "error.log"
 
@@ -36,14 +31,20 @@ func main() {
 	applicationWebsocketHTTP := appWebsocketHTTP.New()
 	Module.StartCommandLineInterface(Module.NewMultiModule(
 		Node.New(Config.Node{
-			Name:               "nodeApp",
-			LoggerPath:         ERROR_LOG_FILE_PATH,
-			ResolverResolution: Resolution.New("resolver", "127.0.0.1:60000", "127.0.0.1", Utilities.GetFileContent("MyCertificate.crt")),
+			Name:                      config.NODE_APP_NAME,
+			LoggerPath:                ERROR_LOG_FILE_PATH,
+			ResolverEndpoint:          TcpEndpoint.New(config.SERVER_IP+":"+Utilities.IntToString(config.RESOLVER_PORT), config.SERVER_NAME_INDICATION, Utilities.GetFileContent(config.CERT_PATH)),
+			SyncResponseTimeoutMs:     1000,
+			BrokerHeartbeatIntervalMs: 100,
+			TopicResolutionLifetimeMs: 10000,
 		}, app.New()),
 		Node.New(Config.Node{
-			Name:               "nodeWebsocketHTTP",
-			LoggerPath:         ERROR_LOG_FILE_PATH,
-			ResolverResolution: Resolution.New("resolver", "127.0.0.1:60000", "127.0.0.1", Utilities.GetFileContent("MyCertificate.crt")),
+			Name:                      config.NODE_WEBSOCKET_HTTP_NAME,
+			LoggerPath:                ERROR_LOG_FILE_PATH,
+			ResolverEndpoint:          TcpEndpoint.New(config.SERVER_IP+":"+Utilities.IntToString(config.RESOLVER_PORT), config.SERVER_NAME_INDICATION, Utilities.GetFileContent(config.CERT_PATH)),
+			SyncResponseTimeoutMs:     1000,
+			BrokerHeartbeatIntervalMs: 100,
+			TopicResolutionLifetimeMs: 10000,
 		}, applicationWebsocketHTTP),
 	))
 }
