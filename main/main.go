@@ -36,6 +36,7 @@ func main() {
 			ResolverEndpoint:          TcpEndpoint.New(config.SERVER_IP+":"+Utilities.IntToString(config.RESOLVER_PORT), config.SERVER_NAME_INDICATION, Utilities.GetFileContent(config.CERT_PATH)),
 			SyncResponseTimeoutMs:     1000,
 			TopicResolutionLifetimeMs: 10000,
+			BrokerReconnectDelayMs:    1000,
 		}, app.New()),
 		Node.New(Config.Node{
 			Name:                      config.NODE_WEBSOCKET_HTTP_NAME,
@@ -43,6 +44,7 @@ func main() {
 			ResolverEndpoint:          TcpEndpoint.New(config.SERVER_IP+":"+Utilities.IntToString(config.RESOLVER_PORT), config.SERVER_NAME_INDICATION, Utilities.GetFileContent(config.CERT_PATH)),
 			SyncResponseTimeoutMs:     1000,
 			TopicResolutionLifetimeMs: 10000,
+			BrokerReconnectDelayMs:    1000,
 		}, applicationWebsocketHTTP),
 	))
 }
