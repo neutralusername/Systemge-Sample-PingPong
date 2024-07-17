@@ -7,7 +7,7 @@ import (
 	"SystemgeSamplePingPong/topics"
 )
 
-func (app *AppWebsocketHTTP) GetSystemgeConfig() Config.Systemge {
+func (app *AppWebsocketHTTP) GetSystemgeComponentConfig() Config.Systemge {
 	return Config.Systemge{
 		HandleMessagesSequentially: false,
 	}
