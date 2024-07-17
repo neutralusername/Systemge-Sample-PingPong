@@ -1,7 +1,6 @@
 package app
 
 import (
-	"Systemge/Config"
 	"Systemge/Node"
 )
 
@@ -14,16 +13,11 @@ func New() Node.Application {
 	return app
 }
 
-func (app *App) OnStart(node *Node.Node) error {
-	return nil
-}
-
-func (app *App) OnStop(node *Node.Node) error {
-	return nil
-}
-
-func (app *App) GetApplicationConfig() Config.Application {
-	return Config.Application{
-		HandleMessagesSequentially: false,
+func (app *App) GetCustomCommandHandlers() map[string]Node.CustomCommandHandler {
+	return map[string]Node.CustomCommandHandler{
+		"pingsReceived": func(node *Node.Node, args []string) error {
+			println(app.pingsReceived)
+			return nil
+		},
 	}
 }
