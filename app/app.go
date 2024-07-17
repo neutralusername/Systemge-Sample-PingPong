@@ -13,7 +13,7 @@ func New() Node.Application {
 	return app
 }
 
-func (app *App) GetCustomCommandHandlers() map[string]Node.CustomCommandHandler {
+func (app *App) GetCommandHandlers() map[string]Node.CustomCommandHandler {
 	return map[string]Node.CustomCommandHandler{
 		"pingsReceived": func(node *Node.Node, args []string) error {
 			println(app.pingsReceived)
