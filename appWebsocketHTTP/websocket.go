@@ -4,7 +4,6 @@ import (
 	"Systemge/Config"
 	"Systemge/Error"
 	"Systemge/Node"
-	"Systemge/Tcp"
 	"SystemgeSamplePingPong/topics"
 )
 
@@ -32,8 +31,10 @@ func (app *AppWebsocketHTTP) OnDisconnectHandler(node *Node.Node, websocketClien
 
 func (app *AppWebsocketHTTP) GetWebsocketComponentConfig() Config.Websocket {
 	return Config.Websocket{
-		Pattern:                          "/ws",
-		Server:                           Tcp.NewServer(8443, "", ""),
+		Pattern: "/ws",
+		Server: Config.TcpServer{
+			Port: 8443,
+		},
 		HandleClientMessagesSequentially: false,
 		ClientMessageCooldownMs:          0,
 		ClientWatchdogTimeoutMs:          20000,
