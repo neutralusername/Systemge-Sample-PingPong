@@ -44,6 +44,7 @@ func main() {
 			Port: 8081,
 		},
 		StatusUpdateIntervalMs: 1000,
+		HeapUpdateIntervalMs:   1000,
 	},
 		Node.New(&Config.Node{
 			Name:           "nodeResolver",
@@ -232,6 +233,5 @@ func main() {
 				Prefix:      "[Debug \"nodeAppWebsocketHTTP\"] ",
 			},
 		}, appWebsocketHTTP.New()),
-	)).Start()
-	<-make(chan struct{})
+	)).StartBlocking()
 }
