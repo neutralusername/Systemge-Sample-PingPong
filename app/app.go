@@ -1,6 +1,7 @@
 package app
 
 import (
+	"Systemge/Helpers"
 	"Systemge/Node"
 )
 
@@ -15,9 +16,8 @@ func New() Node.Application {
 
 func (app *App) GetCommandHandlers() map[string]Node.CommandHandler {
 	return map[string]Node.CommandHandler{
-		"pingsReceived": func(node *Node.Node, args []string) error {
-			println(app.pingsReceived)
-			return nil
+		"pingsReceived": func(node *Node.Node, args []string) (string, error) {
+			return Helpers.IntToString(app.pingsReceived), nil
 		},
 	}
 }
