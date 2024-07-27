@@ -1,9 +1,10 @@
 package appWebsocketHTTP
 
 import (
-	"Systemge/Error"
-	"Systemge/Node"
 	"SystemgeSamplePingPong/topics"
+
+	"github.com/neutralusername/Systemge/Error"
+	"github.com/neutralusername/Systemge/Node"
 )
 
 func (app *AppWebsocketHTTP) OnStart(node *Node.Node) error {

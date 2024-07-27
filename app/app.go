@@ -1,8 +1,8 @@
 package app
 
 import (
-	"Systemge/Helpers"
-	"Systemge/Node"
+	"github.com/neutralusername/Systemge/Helpers"
+	"github.com/neutralusername/Systemge/Node"
 )
 
 type App struct {
