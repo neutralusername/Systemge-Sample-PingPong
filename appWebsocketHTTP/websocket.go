@@ -37,22 +37,15 @@ func (app *AppWebsocketHTTP) GetWebsocketMessageHandlers() map[string]Node.Webso
 }
 
 func (app *AppWebsocketHTTP) OnConnectHandler(node *Node.Node, websocketClient *Node.WebsocketClient) {
-	reponse, err := node.SyncMessage(topics.PINGPONG, websocketClient.GetId(), "ping")
-	if err != nil {
-		if errorLogger := node.GetErrorLogger(); errorLogger != nil {
-			errorLogger.Log(Error.New("error sending pingPongSync message", err).Error())
-		}
-	}
-	if reponse.GetPayload() != "pong" {
-		if errorLogger := node.GetErrorLogger(); errorLogger != nil {
-			errorLogger.Log(Error.New("expected pong, got "+reponse.GetPayload(), nil).Error())
-		}
-	}
-	err = node.AsyncMessage(topics.PING, websocketClient.GetId(), "ping")
-	if err != nil {
-		if errorLogger := node.GetErrorLogger(); errorLogger != nil {
-			errorLogger.Log(Error.New("error sending ping message", err).Error())
-		}
+	for i := 0; i < 100000; i++ {
+		go func() {
+			err := node.AsyncMessage(topics.PING, websocketClient.GetId(), "ping")
+			if err != nil {
+				if errorLogger := node.GetErrorLogger(); errorLogger != nil {
+					errorLogger.Log(Error.New("error sending ping message", err).Error())
+				}
+			}
+		}()
 	}
 }
 

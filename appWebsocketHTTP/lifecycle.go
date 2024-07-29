@@ -8,12 +8,6 @@ import (
 )
 
 func (app *AppWebsocketHTTP) OnStart(node *Node.Node) error {
-	err := node.AsyncMessage(topics.PING, node.GetName(), "ping")
-	if err != nil {
-		if errorLogger := node.GetErrorLogger(); errorLogger != nil {
-			errorLogger.Log(Error.New("error sending ping message", err).Error())
-		}
-	}
 	return nil
 }
 

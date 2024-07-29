@@ -52,6 +52,23 @@ func main() {
 				TlsCertPath: "MyCertificate.crt",
 				TlsKeyPath:  "MyKey.key",
 			},
+			TopicResolutions: map[string]*Config.TcpEndpoint{
+				topics.PINGPONG: {
+					Address: "127.0.0.1:60002",
+					Domain:  "example.com",
+					TlsCert: Helpers.GetFileContent("MyCertificate.crt"),
+				},
+				topics.PING: {
+					Address: "127.0.0.1:60002",
+					Domain:  "example.com",
+					TlsCert: Helpers.GetFileContent("MyCertificate.crt"),
+				},
+				topics.PONG: {
+					Address: "127.0.0.1:60004",
+					Domain:  "example.com",
+					TlsCert: Helpers.GetFileContent("MyCertificate.crt"),
+				},
+			},
 			TcpTimeoutMs: 5000,
 		})),
 		Node.New(&Config.Node{
@@ -80,12 +97,6 @@ func main() {
 			SyncTopics:  []string{topics.PINGPONG},
 			AsyncTopics: []string{topics.PING},
 
-			ResolverConfigEndpoint: &Config.TcpEndpoint{
-				Address: "127.0.0.1:60001",
-				Domain:  "example.com",
-				TlsCert: Helpers.GetFileContent("MyCertificate.crt"),
-			},
-
 			SyncResponseTimeoutMs: 10000,
 			TcpTimeoutMs:          5000,
 		})),
@@ -113,12 +124,6 @@ func main() {
 			},
 
 			AsyncTopics: []string{topics.PONG},
-
-			ResolverConfigEndpoint: &Config.TcpEndpoint{
-				Address: "127.0.0.1:60001",
-				Domain:  "example.com",
-				TlsCert: Helpers.GetFileContent("MyCertificate.crt"),
-			},
 
 			SyncResponseTimeoutMs: 10000,
 			TcpTimeoutMs:          5000,
