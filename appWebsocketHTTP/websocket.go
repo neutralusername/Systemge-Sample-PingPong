@@ -38,7 +38,6 @@ func (app *AppWebsocketHTTP) OnConnectHandler(node *Node.Node, websocketClient *
 		}()
 	}
 	println("100000 pings sent in " + time.Since(startedAt).String()) */
-
 }
 
 func (app *AppWebsocketHTTP) OnDisconnectHandler(node *Node.Node, websocketClient *Node.WebsocketClient) {
