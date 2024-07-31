@@ -24,7 +24,7 @@ func (app *App) GetAsyncMessageHandlers() map[string]Node.AsyncMessageHandler {
 	return map[string]Node.AsyncMessageHandler{
 		topics.PING: func(node *Node.Node, message *Message.Message) error {
 			app.pingsReceived++
-			/* if app.pingsReceived == 2 {
+			/* 	if app.pingsReceived == 2 {
 				startedAt = time.Now()
 			}
 			if app.pingsReceived == 100001 {
