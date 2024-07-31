@@ -2,50 +2,35 @@ package appWebsocketHTTP
 
 import (
 	"SystemgeSamplePingPong/topics"
-	"net/http"
 
-	"github.com/neutralusername/Systemge/Config"
 	"github.com/neutralusername/Systemge/Error"
 	"github.com/neutralusername/Systemge/Node"
-
-	"github.com/gorilla/websocket"
 )
-
-func (app *AppWebsocketHTTP) GetWebsocketComponentConfig() *Config.Websocket {
-	return &Config.Websocket{
-		Pattern: "/ws",
-		Server: &Config.TcpServer{
-			Port:      8443,
-			Blacklist: []string{},
-			Whitelist: []string{},
-		},
-		HandleClientMessagesSequentially: false,
-		ClientMessageCooldownMs:          0,
-		ClientWatchdogTimeoutMs:          20000,
-		Upgrader: &websocket.Upgrader{
-			ReadBufferSize:  1024,
-			WriteBufferSize: 1024,
-			CheckOrigin: func(r *http.Request) bool {
-				return true
-			},
-		},
-	}
-}
 
 func (app *AppWebsocketHTTP) GetWebsocketMessageHandlers() map[string]Node.WebsocketMessageHandler {
 	return map[string]Node.WebsocketMessageHandler{}
 }
 
 func (app *AppWebsocketHTTP) OnConnectHandler(node *Node.Node, websocketClient *Node.WebsocketClient) {
-	for i := 0; i < 100000; i++ {
-		go func() {
-			err := node.AsyncMessage(topics.PING, websocketClient.GetId(), "ping")
-			if err != nil {
-				if errorLogger := node.GetErrorLogger(); errorLogger != nil {
-					errorLogger.Log(Error.New("error sending ping message", err).Error())
-				}
-			}
-		}()
+	reponseChannel, err := node.SyncMessage(topics.PINGPONG, "ping")
+	if err != nil {
+		if errorLogger := node.GetErrorLogger(); errorLogger != nil {
+			errorLogger.Log(Error.New("error sending pingPongSync message", err).Error())
+		}
+	}
+	response, err := reponseChannel.ReceiveResponse()
+	if err != nil {
+		panic(err)
+
+	}
+	if response.GetMessage().GetPayload() != "pong" {
+		panic("unexpected response")
+	}
+	err = node.AsyncMessage(topics.PING, "ping")
+	if err != nil {
+		if errorLogger := node.GetErrorLogger(); errorLogger != nil {
+			errorLogger.Log(Error.New("error sending ping message", err).Error())
+		}
 	}
 }
 

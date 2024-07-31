@@ -12,7 +12,7 @@ func (app *AppWebsocketHTTP) OnStart(node *Node.Node) error {
 }
 
 func (app *AppWebsocketHTTP) OnStop(node *Node.Node) error {
-	err := node.AsyncMessage(topics.PING, node.GetName(), "ping")
+	err := node.AsyncMessage(topics.PING, "ping")
 	if err != nil {
 		if errorLogger := node.GetErrorLogger(); errorLogger != nil {
 			errorLogger.Log(Error.New("error sending ping message", err).Error())
