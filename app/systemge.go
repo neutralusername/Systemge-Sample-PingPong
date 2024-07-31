@@ -2,8 +2,9 @@ package app
 
 import (
 	"SystemgeSamplePingPong/topics"
+	"sync/atomic"
+	"time"
 
-	"github.com/neutralusername/Systemge/Error"
 	"github.com/neutralusername/Systemge/Message"
 	"github.com/neutralusername/Systemge/Node"
 )
@@ -18,23 +19,24 @@ func (app *App) GetSyncMessageHandlers() map[string]Node.SyncMessageHandler {
 	}
 }
 
-/* var startedAt = time.Time{} */
+var startedAt = time.Time{}
+var counter = atomic.Uint32{}
 
 func (app *App) GetAsyncMessageHandlers() map[string]Node.AsyncMessageHandler {
 	return map[string]Node.AsyncMessageHandler{
 		topics.PING: func(node *Node.Node, message *Message.Message) error {
-			app.pingsReceived++
-			/* 	if app.pingsReceived == 2 {
+			val := counter.Add(1)
+			if val == 1 {
 				startedAt = time.Now()
 			}
-			if app.pingsReceived == 100001 {
+			if val == 100000 {
 				println("100000 pings received in " + time.Since(startedAt).String())
-				app.pingsReceived = 0
-			} */
-			err := node.AsyncMessage("pong", "pong")
+				counter.Store(0)
+			}
+			/* 	err := node.AsyncMessage("pong", "pong")
 			if err != nil {
 				return Error.New("error sending pong message", err)
-			}
+			} */
 			return nil
 		},
 	}
