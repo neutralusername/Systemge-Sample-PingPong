@@ -1,9 +1,6 @@
 package appWebsocketHTTP
 
 import (
-	"SystemgeSamplePingPong/topics"
-
-	"github.com/neutralusername/Systemge/Error"
 	"github.com/neutralusername/Systemge/Node"
 )
 
@@ -12,12 +9,5 @@ func (app *AppWebsocketHTTP) OnStart(node *Node.Node) error {
 }
 
 func (app *AppWebsocketHTTP) OnStop(node *Node.Node) error {
-	err := node.AsyncMessage(topics.PING, "ping")
-	if err != nil {
-		if errorLogger := node.GetErrorLogger(); errorLogger != nil {
-			errorLogger.Log(Error.New("error sending ping message", err).Error())
-		}
-	}
-	println("successfully sent ping message to broker but app's node already stopped due to multi-module stop order.")
 	return nil
 }
