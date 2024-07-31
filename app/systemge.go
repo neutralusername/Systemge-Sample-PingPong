@@ -23,7 +23,7 @@ func (app *App) GetSyncMessageHandlers() map[string]Node.SyncMessageHandler {
 func (app *App) GetAsyncMessageHandlers() map[string]Node.AsyncMessageHandler {
 	return map[string]Node.AsyncMessageHandler{
 		topics.PING: func(node *Node.Node, message *Message.Message) error {
-			/* 	if app.pingsReceived == 1 {
+			/* if app.pingsReceived == 1 {
 				startedAt = time.Now()
 			}
 			if app.pingsReceived == 100000 {
