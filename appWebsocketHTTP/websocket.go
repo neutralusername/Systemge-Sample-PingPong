@@ -24,9 +24,10 @@ func (app *AppWebsocketHTTP) OnConnectHandler(node *Node.Node, websocketClient *
 	if response.GetMessage().GetPayload() != "pong" {
 		panic("unexpected response")
 	}
-	println("received pong-sync")
 	/*
-		 	for i := 0; i < 100000; i++ {
+		 	println("received pong-sync")
+			startedAt := time.Now()
+			for i := 0; i < 100000; i++ {
 				err := node.AsyncMessage(topics.PING, "ping")
 				if err != nil {
 					if errorLogger := node.GetErrorLogger(); errorLogger != nil {
@@ -34,6 +35,7 @@ func (app *AppWebsocketHTTP) OnConnectHandler(node *Node.Node, websocketClient *
 					}
 				}
 			}
+			println("100000 pings sent in " + time.Since(startedAt).String())
 	*/
 }
 
