@@ -3,7 +3,6 @@ package appWebsocketHTTP
 import (
 	"SystemgeSamplePingPong/topics"
 
-	"github.com/neutralusername/Systemge/Error"
 	"github.com/neutralusername/Systemge/Node"
 )
 
@@ -14,10 +13,9 @@ func (app *AppWebsocketHTTP) GetWebsocketMessageHandlers() map[string]Node.Webso
 func (app *AppWebsocketHTTP) OnConnectHandler(node *Node.Node, websocketClient *Node.WebsocketClient) {
 	reponseChannel, err := node.SyncMessage(topics.PINGPONG, "ping")
 	if err != nil {
-		if errorLogger := node.GetErrorLogger(); errorLogger != nil {
-			errorLogger.Log(Error.New("error sending pingPongSync message", err).Error())
-		}
+		panic(err)
 	}
+	println("sent ping-sync")
 	response, err := reponseChannel.ReceiveResponse()
 	if err != nil {
 		panic(err)
@@ -26,6 +24,7 @@ func (app *AppWebsocketHTTP) OnConnectHandler(node *Node.Node, websocketClient *
 	if response.GetMessage().GetPayload() != "pong" {
 		panic("unexpected response")
 	}
+	println("received pong-sync")
 	/*
 		 	for i := 0; i < 100000; i++ {
 				go func() {

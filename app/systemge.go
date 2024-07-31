@@ -12,6 +12,7 @@ func (app *App) GetSyncMessageHandlers() map[string]Node.SyncMessageHandler {
 	return map[string]Node.SyncMessageHandler{
 		topics.PINGPONG: func(node *Node.Node, message *Message.Message) (string, error) {
 			app.pingsReceived++
+			println("received ping-sync; sending pong-sync")
 			return "pong", nil
 		},
 	}
