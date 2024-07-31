@@ -8,6 +8,7 @@ import (
 	"github.com/gorilla/websocket"
 	"github.com/neutralusername/Systemge/Config"
 	"github.com/neutralusername/Systemge/Dashboard"
+	"github.com/neutralusername/Systemge/Helpers"
 	"github.com/neutralusername/Systemge/Node"
 	"github.com/neutralusername/Systemge/Tools"
 )
@@ -36,11 +37,13 @@ func main() {
 	},
 		Node.New(&Config.NewNode{
 			NodeConfig: &Config.Node{
-				Name:              "nodeApp",
-				RandomizerSeed:    Tools.GetSystemTime(),
-				InfoLoggerPath:    LOGGER_PATH,
-				WarningLoggerPath: LOGGER_PATH,
-				ErrorLoggerPath:   LOGGER_PATH,
+				Name:                      "nodeApp",
+				RandomizerSeed:            Tools.GetSystemTime(),
+				InfoLoggerPath:            LOGGER_PATH,
+				WarningLoggerPath:         LOGGER_PATH,
+				ErrorLoggerPath:           LOGGER_PATH,
+				InternalInfoLoggerPath:    LOGGER_PATH,
+				InternalWarningLoggerPath: LOGGER_PATH,
 			},
 			SystemgeConfig: &Config.Systemge{
 				HandleMessagesSequentially: false,
@@ -51,11 +54,15 @@ func main() {
 				ConnectionAttemptDelayMs:        1000,
 				StopAfterOutgoingConnectionLoss: true,
 				ServerConfig: &Config.TcpServer{
-					Port: 60001,
+					Port:        60001,
+					TlsCertPath: "MyCertificate.crt",
+					TlsKeyPath:  "MyKey.key",
 				},
 				EndpointConfigs: []*Config.TcpEndpoint{
 					{
 						Address: "localhost:60002",
+						TlsCert: Helpers.GetFileContent("MyCertificate.crt"),
+						Domain:  "example.com",
 					},
 				},
 				IncomingMessageByteLimit: 0,
@@ -67,11 +74,13 @@ func main() {
 		}, app.New()),
 		Node.New(&Config.NewNode{
 			NodeConfig: &Config.Node{
-				Name:              "nodeWebsocketHTTP",
-				RandomizerSeed:    Tools.GetSystemTime(),
-				InfoLoggerPath:    LOGGER_PATH,
-				WarningLoggerPath: LOGGER_PATH,
-				ErrorLoggerPath:   LOGGER_PATH,
+				Name:                      "nodeWebsocketHTTP",
+				RandomizerSeed:            Tools.GetSystemTime(),
+				InfoLoggerPath:            LOGGER_PATH,
+				WarningLoggerPath:         LOGGER_PATH,
+				ErrorLoggerPath:           LOGGER_PATH,
+				InternalInfoLoggerPath:    LOGGER_PATH,
+				InternalWarningLoggerPath: LOGGER_PATH,
 			},
 			SystemgeConfig: &Config.Systemge{
 				HandleMessagesSequentially: false,
@@ -82,11 +91,15 @@ func main() {
 				ConnectionAttemptDelayMs:        1000,
 				StopAfterOutgoingConnectionLoss: true,
 				ServerConfig: &Config.TcpServer{
-					Port: 60002,
+					Port:        60002,
+					TlsCertPath: "MyCertificate.crt",
+					TlsKeyPath:  "MyKey.key",
 				},
 				EndpointConfigs: []*Config.TcpEndpoint{
 					{
 						Address: "localhost:60001",
+						TlsCert: Helpers.GetFileContent("MyCertificate.crt"),
+						Domain:  "example.com",
 					},
 				},
 				IncomingMessageByteLimit: 0,

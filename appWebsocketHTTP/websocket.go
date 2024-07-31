@@ -26,12 +26,18 @@ func (app *AppWebsocketHTTP) OnConnectHandler(node *Node.Node, websocketClient *
 	if response.GetMessage().GetPayload() != "pong" {
 		panic("unexpected response")
 	}
-	err = node.AsyncMessage(topics.PING, "ping")
-	if err != nil {
-		if errorLogger := node.GetErrorLogger(); errorLogger != nil {
-			errorLogger.Log(Error.New("error sending ping message", err).Error())
-		}
-	}
+	/*
+		 	for i := 0; i < 100000; i++ {
+				go func() {
+					err := node.AsyncMessage(topics.PING, "ping")
+					if err != nil {
+						if errorLogger := node.GetErrorLogger(); errorLogger != nil {
+							errorLogger.Log(Error.New("error sending ping message", err).Error())
+						}
+					}
+				}()
+			}
+	*/
 }
 
 func (app *AppWebsocketHTTP) OnDisconnectHandler(node *Node.Node, websocketClient *Node.WebsocketClient) {

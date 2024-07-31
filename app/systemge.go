@@ -21,6 +21,7 @@ func (app *App) GetAsyncMessageHandlers() map[string]Node.AsyncMessageHandler {
 	return map[string]Node.AsyncMessageHandler{
 		topics.PING: func(node *Node.Node, message *Message.Message) error {
 			app.pingsReceived++
+			println(app.pingsReceived)
 			err := node.AsyncMessage("pong", "pong")
 			if err != nil {
 				return Error.New("error sending pong message", err)
