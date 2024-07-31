@@ -27,14 +27,12 @@ func (app *AppWebsocketHTTP) OnConnectHandler(node *Node.Node, websocketClient *
 	println("received pong-sync")
 	/*
 		 	for i := 0; i < 100000; i++ {
-				go func() {
-					err := node.AsyncMessage(topics.PING, "ping")
-					if err != nil {
-						if errorLogger := node.GetErrorLogger(); errorLogger != nil {
-							errorLogger.Log(Error.New("error sending ping message", err).Error())
-						}
+				err := node.AsyncMessage(topics.PING, "ping")
+				if err != nil {
+					if errorLogger := node.GetErrorLogger(); errorLogger != nil {
+						errorLogger.Log(Error.New("error sending ping message", err).Error())
 					}
-				}()
+				}
 			}
 	*/
 }

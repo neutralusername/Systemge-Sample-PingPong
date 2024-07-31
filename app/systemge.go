@@ -18,11 +18,18 @@ func (app *App) GetSyncMessageHandlers() map[string]Node.SyncMessageHandler {
 	}
 }
 
+/* var startedAt = time.Time{} */
+
 func (app *App) GetAsyncMessageHandlers() map[string]Node.AsyncMessageHandler {
 	return map[string]Node.AsyncMessageHandler{
 		topics.PING: func(node *Node.Node, message *Message.Message) error {
+			/* 	if app.pingsReceived == 1 {
+				startedAt = time.Now()
+			}
+			if app.pingsReceived == 100000 {
+				println("100000 pings received in " + time.Since(startedAt).String())
+			} */
 			app.pingsReceived++
-			println(app.pingsReceived)
 			err := node.AsyncMessage("pong", "pong")
 			if err != nil {
 				return Error.New("error sending pong message", err)
