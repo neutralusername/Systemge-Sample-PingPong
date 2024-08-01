@@ -21,7 +21,7 @@ func (app *AppWebsocketHTTP) OnConnectHandler(node *Node.Node, websocketClient *
 		panic(err)
 
 	}
-	if response.GetMessage().GetPayload() != "pong" {
+	if response.GetPayload() != "pong" {
 		panic("unexpected response")
 	}
 	println("received pong-sync")
